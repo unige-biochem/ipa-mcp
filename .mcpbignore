@@ -2,7 +2,10 @@
 .venv
 tests
 dist
+install
 .pytest_cache
+__pycache__
+*.pyc
 DEVELOPMENT.md
 Shared_Folder.lnk
 CLAUDE.md

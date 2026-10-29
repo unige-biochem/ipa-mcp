@@ -40,6 +40,22 @@ which lab you are in, and remembers it in `~/.ipa-mcp/config.json`.
 Not published to PyPI yet: until then, install from the repository with
 `uvx --from git+https://gitlab.unige.ch/unige-biochem/common/ipa-mcp ipa-mcp`.
 
+### Testing from a checkout (Windows)
+
+Clone the repository, then double-click one script in `install/`. Each one registers
+the checkout as the server named `ipa`, pointing at `uv run --directory <checkout> ipa-mcp`:
+
+| Script | Registers in | Undo |
+| --- | --- | --- |
+| `install\claude-desktop.bat` | Claude Desktop (`%APPDATA%\Claude\claude_desktop_config.json`); restart it | `claude-desktop.bat --remove` |
+| `install\claude-code.bat` | Claude Code, user scope | `claude mcp remove ipa` |
+| `install\vscode.bat` | VS Code, user profile | *MCP: List Servers* in VS Code |
+| `install\check.bat` | nothing: prints whether the library was found | |
+
+Or, for Claude Desktop without a checkout: pack the bundle (see
+[DEVELOPMENT.md](DEVELOPMENT.md)) and open the `.mcpb` file with Claude Desktop,
+which asks for the library folder; `uv` must be installed.
+
 ## What it knows
 
 | | From |
