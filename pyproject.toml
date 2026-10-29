@@ -1,0 +1,39 @@
+[project]
+name = "ipa-mcp"
+version = "0.1.0.dev0"
+description = "MCP server for the UNIGE Biochemistry imaging site (biochem-ipa): equipment, protocols, PSF and laser-power records, read from your synced copy of the site's library"
+readme = "readme.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Nicolas Chiaruttini", email = "nicolas.chiaruttini@unige.ch" }]
+keywords = ["mcp", "microscopy", "image analysis", "sharepoint", "core facility"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+    "mcp>=1.9,<2",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp"
+Issues = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp/-/issues"
+Site = "https://unigech.sharepoint.com/teams/ipa"
+
+[project.scripts]
+ipa-mcp = "ipa_mcp:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ipa_mcp"]
+
+[dependency-groups]
+dev = ["pytest>=8"]

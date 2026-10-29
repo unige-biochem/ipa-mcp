@@ -1,0 +1,47 @@
+{
+  "manifest_version": "0.4",
+  "name": "ipa-mcp",
+  "display_name": "biochem-ipa (UNIGE imaging site)",
+  "version": "0.1.0",
+  "description": "The department's microscopes, protocols, PSF and laser-power records, from your synced copy of the site's library",
+  "long_description": "Lets your assistant answer questions about the UNIGE Biochemistry imaging site: which scope has a water objective, whether a laser has lost power since last year, where the PSF of an objective is, what is installed on the lab VMs, where to book. It reads the OneDrive-synced copy of the site's library on your machine, read-only, with no credentials. Experimental.",
+  "author": { "name": "Nicolas Chiaruttini", "email": "nicolas.chiaruttini@unige.ch" },
+  "homepage": "https://unigech.sharepoint.com/teams/ipa",
+  "support": "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp/-/issues",
+  "server": {
+    "type": "uv",
+    "entry_point": "src/ipa_mcp/__init__.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--directory", "${__dirname}", "ipa-mcp"],
+      "env": { "IPA_LIBRARY": "${user_config.library}" }
+    }
+  },
+  "user_config": {
+    "library": {
+      "type": "directory",
+      "title": "Synced library folder",
+      "description": "The folder OneDrive created when you clicked Sync on the site's library, named 'biochem-ipa - Documents'. Leave empty to let the server find it.",
+      "required": false
+    }
+  },
+  "tools": [
+    { "name": "ipa_status", "description": "Is the synced library here, how fresh is it, who is the user; setup steps if missing" },
+    { "name": "ipa_set_user", "description": "Remember the user's name and lab, and the library path if auto-detection failed" },
+    { "name": "ipa_equipment", "description": "Every microscope, hood and VM on the site, with objectives, light paths and laser lines" },
+    { "name": "ipa_find", "description": "Which item the user means, from a loose name" },
+    { "name": "ipa_item", "description": "Everything the site knows about one item, structured, with what has been measured" },
+    { "name": "ipa_page", "description": "Read a page of the site, or one section of it" },
+    { "name": "ipa_search", "description": "Search every page and the measurement READMEs" },
+    { "name": "ipa_laser_power", "description": "Laser power at the sample over time, per scope, line and light path" },
+    { "name": "ipa_psf", "description": "PSF measurements per scope, objective and light path, with the PSF image files" },
+    { "name": "ipa_builds", "description": "Courses, presentations and viewers on the site" },
+    { "name": "ipa_booking", "description": "Where to book an item" },
+    { "name": "ipa_open", "description": "Open a page or file of the site in the browser" },
+    { "name": "ipa_files", "description": "List the files of a library folder, with sizes and download state" }
+  ],
+  "license": "MIT",
+  "compatibility": { "runtimes": { "python": ">=3.10" } },
+  "repository": { "type": "git", "url": "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp" },
+  "privacy_policies": []
+}

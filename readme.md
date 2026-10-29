@@ -1,23 +1,68 @@
-# ipa-mcp
+# ipa-mcp: the department's imaging site for AI assistants (draft)
 
-Created by: Nicolas Chiaruttini
+Lets an AI assistant answer questions about the UNIGE Biochemistry imaging site,
+[biochem-ipa](https://unigech.sharepoint.com/teams/ipa): the microscopes, hoods and
+lab VMs, their protocols, and the measurements made on them.
 
-GitLab URL: https://gitlab.unige.ch/unige-biochem/common/ipa-mcp
+> Is there a water objective on the Nikon scope? Has the laser power of the 3i
+> spinning disk dropped since last year? Get me the PSF of the 60x. Is napari
+> installed on the VMs? Open the booking page for the spinning disc.
 
-Data folder (Windows):
+When the answer is on the site, the assistant gives it with the page to check.
+When it is not, it says so and gives the way forward: the protocol, and that the
+facility can measure it with you.
 
-```
-I:\common\ipa-mcp
-```
+It is an [MCP](https://modelcontextprotocol.io) server, so it is not tied to one
+assistant: any application that can start a local MCP server, with any model it
+offers. It reads **your own synced copy** of the site's library, read-only, with no
+credentials: what the assistant sees is what your account can already read. What
+you then send to a model is your decision, as with any file you open.
 
-Data folder (macOS — Finder → Go → Connect to Server):
+## Install
 
-```
-smb://isis.unige.ch/nasac/s/biochem/biochem-ipa/ipa_biochemistry/common/ipa-mcp
-```
+1. **Sync the library once.** Open the site's
+   [library](https://unigech.sharepoint.com/teams/ipa/Documents%20partages) and click
+   *Sync*. OneDrive creates a folder named *biochem-ipa - Documents*. Large raw files
+   stay placeholders until something reads them.
+2. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/).**
+3. **Register `uvx ipa-mcp`** as a local (stdio) MCP server in your application:
+   - VS Code: [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_ipa--mcp-0098FF?logo=visualstudiocode)](https://vscode.dev/redirect/mcp/install?name=ipa&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22ipa-mcp%22%5D%7D)
+   - Claude Code: `claude mcp add ipa -- uvx ipa-mcp`
+   - Claude Desktop: the `.mcpb` bundle attached to a release, or *Settings, Developer,
+     Edit config* with the same command.
+   - Anything else: command `uvx`, arguments `ipa-mcp`.
 
-## Confidentiality
+The server finds the synced folder by itself (OneDrive's registry on Windows, the
+usual places on macOS). If it does not, set `IPA_LIBRARY` to the folder, or tell the
+assistant where it is. The first time it matters, the assistant asks who you are and
+which lab you are in, and remembers it in `~/.ipa-mcp/config.json`.
 
-Level for this project: **open** — code, scientific question and sample images may be shown to AI tools.
+Not published to PyPI yet: until then, install from the repository with
+`uvx --from git+https://gitlab.unige.ch/unige-biochem/common/ipa-mcp ipa-mcp`.
 
-This is what your PI asked for (or, if they were happy with the default, what I use unless told otherwise). It covers what may be shown to AI tools while working on the analysis.
+## What it knows
+
+| | From |
+| --- | --- |
+| Every page of the site: hardware, software, start-up, quirks, protocols, VMs | `site/*.md` |
+| The equipment registry: objectives, light paths, laser lines, rooms | `site/registry.json` |
+| Laser power at the sample over time | `data/laser-power/laser-power.csv` |
+| PSFs per objective and light path, with the PSF images | `data/psf/psf.csv`, `data/psf/<session>/` |
+| Courses, presentations, viewers | `builds/*/*/build.yaml` |
+
+The copy is as fresh as OneDrive's last sync. The site is the reference, and the
+assistant cites its pages. The library's `private/` folder is never read.
+
+## Development
+
+See [DEVELOPMENT.md](DEVELOPMENT.md).
+
+---
+
+Created by: Nicolas Chiaruttini. GitLab: https://gitlab.unige.ch/unige-biochem/common/ipa-mcp
+
+Data folder (Windows): `I:\common\ipa-mcp`. macOS (Finder, Go, Connect to Server):
+`smb://isis.unige.ch/nasac/s/biochem/biochem-ipa/ipa_biochemistry/common/ipa-mcp`.
+
+Confidentiality level for this project: **open**: code, scientific question and sample
+images may be shown to AI tools.

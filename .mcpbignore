@@ -1,0 +1,8 @@
+.git
+.venv
+tests
+dist
+.pytest_cache
+DEVELOPMENT.md
+Shared_Folder.lnk
+CLAUDE.md
