@@ -1,8 +1,7 @@
 @echo off
-rem Registers this checkout as the "ipa" MCP server in Claude Desktop.
-rem Needs uv (https://docs.astral.sh/uv/). Restart Claude Desktop afterwards.
-rem To remove it again:  claude-desktop.bat --remove
-set "ARGS="
-if /i "%~1"=="--remove" set "ARGS=-Remove"
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0claude-desktop.ps1" %ARGS%
+rem Installs the "ipa" MCP server in Claude Desktop. Double-click it.
+rem Needs uv and git; it says so if one is missing. Running it again updates the server.
+rem   claude-desktop.bat -Remove   removes it again
+rem   claude-desktop.bat -Checkout   this checkout instead of the GitHub repository (development)
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" -App claude-desktop %*
 pause

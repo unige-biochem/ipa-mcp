@@ -26,16 +26,42 @@ you then send to a model is your decision, as with any file you open.
    stay placeholders until something reads them.
 2. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/)** and
    [git](https://git-scm.com/downloads) (uv uses it to fetch the server).
-3. **Register the server** as a local (stdio) MCP server in your application. It runs
-   straight from the repository, with
-   `uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`:
-   - VS Code: [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_ipa--mcp-0098FF?logo=visualstudiocode)](https://vscode.dev/redirect/mcp/install?name=ipa&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--from%22%2C%22git%2Bhttps%3A%2F%2Fgithub.com%2Funige-biochem%2Fipa-mcp%22%2C%22ipa-mcp%22%5D%7D)
-   - Claude Code: `claude mcp add ipa -- uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`
-   - Claude Desktop: the `.mcpb` bundle attached to a
-     [release](https://github.com/unige-biochem/ipa-mcp/releases), or *Settings, Developer,
-     Edit config* with the same command.
-   - Anything else: command `uvx`, arguments
-     `--from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`.
+3. **Install the server in your application.**
+
+### Windows: double-click
+
+Download the repository (on GitHub: *Code*, *Download ZIP*) and unzip it. In its
+`install` folder, double-click the script for your application:
+
+| Script | Installs in | Then |
+| --- | --- | --- |
+| `claude-code.bat` | Claude Code, for every project | start a new session |
+| `claude-desktop.bat` | Claude Desktop | quit it (also from the tray icon) and open it again |
+| `vscode.bat` | VS Code, your user profile | *MCP: List Servers* shows `ipa` |
+| `check.bat` | nothing: says whether the server starts and finds the library | |
+
+Each script checks that uv and git are there, fetches the server and starts it once
+(so the application does not wait for the first download), says whether it found
+the library, then registers it. Running it again updates the server; `-Remove` (for
+example `claude-code.bat -Remove` in a terminal) takes it out again. The unzipped
+folder is not needed afterwards.
+
+### By hand (any system, any application)
+
+The server runs straight from the repository with
+`uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`. **Run this once
+first**, with `--status` at the end: the first run downloads and builds it, which can
+take longer than an application waits for a server to start, and it shows whether the
+library was found. Then register it:
+
+- VS Code: [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_ipa--mcp-0098FF?logo=visualstudiocode)](https://vscode.dev/redirect/mcp/install?name=ipa&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--from%22%2C%22git%2Bhttps%3A%2F%2Fgithub.com%2Funige-biochem%2Fipa-mcp%22%2C%22ipa-mcp%22%5D%7D)
+- Claude Code, for every project, then start a new session:
+  `claude mcp add -s user ipa -- uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`
+- Claude Desktop: *Settings, Developer, Edit config*, under `mcpServers`:
+  `"ipa": {"command": "uvx", "args": ["--from", "git+https://github.com/unige-biochem/ipa-mcp", "ipa-mcp"]}`,
+  then quit and reopen it.
+- Anything else: command `uvx`, arguments
+  `--from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`.
 
 The server finds the synced folder by itself (OneDrive's registry on Windows, the
 usual places on macOS). If it does not, set `IPA_LIBRARY` to the folder, or tell the
@@ -45,24 +71,31 @@ which lab you are in, and remembers it in `~/.ipa-mcp/config.json`.
 **It is not on PyPI, and will not be:** it only makes sense for the department's
 site, so it is installed from git. `uvx ipa-mcp` alone does not work. To stay on
 one version, add it to the URL (`git+https://github.com/unige-biochem/ipa-mcp@v0.1.0`).
-`uvx` keeps what it built: to pick up a newer version, run the same command once with
-`--refresh` after `uvx`.
 
-### Testing from a checkout (Windows)
+### If the tools do not show up
 
-Clone the repository, then double-click one script in `install/`. Each one registers
-the checkout as the server named `ipa`, pointing at `uv run --directory <checkout> ipa-mcp`:
+- **Restart.** Applications load their servers when a session starts: a new Claude
+  Code session, Claude Desktop quit and reopened, or *MCP: List Servers*, `ipa`,
+  *Start* in VS Code.
+- **See what it says.** In Claude Code, `/mcp` lists the servers and their state, and
+  `claude mcp get ipa` shows where `ipa` is registered.
+- **First start too slow.** Run `uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp --status`
+  once (or `check.bat`), then restart.
+- **"MCP server ipa already exists".** It is already registered: nothing to do. To
+  replace it, `claude mcp remove ipa` first, or run `claude-code.bat` again.
+- **Works in one folder only (Claude Code).** `claude mcp add` without `-s user`
+  registers it for the current folder only, and that entry wins there. In that
+  folder, `claude mcp remove -s local ipa`, then add it with `-s user`.
+- **Library not found.** `--status` gives the setup steps; or set `IPA_LIBRARY`.
+- **Newer version.** `uvx` keeps what it built: run the `--status` command above with
+  `--refresh` after `uvx` (or the `.bat` again), then restart.
 
-| Script | Registers in | Undo |
-| --- | --- | --- |
-| `install\claude-desktop.bat` | Claude Desktop (`%APPDATA%\Claude\claude_desktop_config.json`); restart it | `claude-desktop.bat --remove` |
-| `install\claude-code.bat` | Claude Code, user scope | `claude mcp remove ipa` |
-| `install\vscode.bat` | VS Code, user profile | *MCP: List Servers* in VS Code |
-| `install\check.bat` | nothing: prints whether the library was found | |
+### Testing from a checkout
 
-Or, for Claude Desktop without a checkout: pack the bundle (see
-[DEVELOPMENT.md](DEVELOPMENT.md)) and open the `.mcpb` file with Claude Desktop,
-which asks for the library folder; `uv` must be installed.
+Clone the repository and run the same scripts with `-Checkout` (for example
+`install\claude-code.bat -Checkout`): they register the checkout, with
+`uv run --directory <checkout> ipa-mcp`, instead of the GitHub repository. For the
+Claude Desktop bundle, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## What it knows
 

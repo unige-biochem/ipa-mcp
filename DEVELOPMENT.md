@@ -31,7 +31,13 @@ uv run pytest                         # tests against a fake library in a temp f
 ```
 
 To try it in an assistant from the checkout: command `uv`, arguments
-`run --directory <this folder> ipa-mcp`.
+`run --directory <this folder> ipa-mcp`, or `install\<app>.bat -Checkout`.
+
+The Windows installers are `install/install.ps1`, run by one `.bat` per application.
+They are what department users double-click, so keep them safe to rerun: check uv and
+git, start the server once with `--refresh --status` (the first start downloads and
+builds it, which can outlast an application's start-up wait), replace the `ipa` entry
+at user scope, and say what to restart.
 
 ## Principles
 
