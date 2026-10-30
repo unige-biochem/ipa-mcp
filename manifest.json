@@ -7,7 +7,7 @@
   "long_description": "Lets your assistant answer questions about the UNIGE Biochemistry imaging site: which scope has a water objective, whether a laser has lost power since last year, where the PSF of an objective is, what is installed on the lab VMs, where to book. It reads the OneDrive-synced copy of the site's library on your machine, read-only, with no credentials. Experimental.",
   "author": { "name": "Nicolas Chiaruttini", "email": "nicolas.chiaruttini@unige.ch" },
   "homepage": "https://unigech.sharepoint.com/teams/ipa",
-  "support": "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp/-/issues",
+  "support": "https://github.com/unige-biochem/ipa-mcp/issues",
   "server": {
     "type": "uv",
     "entry_point": "src/ipa_mcp/__init__.py",

@@ -23,9 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp"
-Source = "https://github.com/unige-biochem/ipa-mcp"
-Issues = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp/-/issues"
+Homepage = "https://github.com/unige-biochem/ipa-mcp"
+Issues = "https://github.com/unige-biochem/ipa-mcp/issues"
 Site = "https://unigech.sharepoint.com/teams/ipa"
 
 [project.scripts]

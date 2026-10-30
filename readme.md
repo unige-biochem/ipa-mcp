@@ -83,9 +83,9 @@ See [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ---
 
-Created by: Nicolas Chiaruttini. GitLab (development, issues):
-https://gitlab.unige.ch/unige-biochem/common/ipa-mcp. GitHub (public copy, to install
-from): https://github.com/unige-biochem/ipa-mcp
+Created by: Nicolas Chiaruttini. GitHub (code, issues, releases):
+https://github.com/unige-biochem/ipa-mcp. The facility's project record stays on GitLab:
+https://gitlab.unige.ch/unige-biochem/common/ipa-mcp
 
 Data folder (Windows): `I:\common\ipa-mcp`. macOS (Finder, Go, Connect to Server):
 `smb://isis.unige.ch/nasac/s/biochem/biochem-ipa/ipa_biochemistry/common/ipa-mcp`.

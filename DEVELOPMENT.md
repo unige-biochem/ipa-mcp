@@ -52,14 +52,14 @@ PyPI**: users install it from git, `uvx --from git+https://github.com/unige-bioc
 The `Private :: Do Not Upload` classifier in `pyproject.toml` makes PyPI refuse an
 upload made by mistake; keep it.
 
-Two remotes, both kept up to date:
+The repository's home is GitHub; the GitLab project is kept as the facility's record:
 
 | Remote | URL | For |
 | --- | --- | --- |
-| `origin` | `gitlab.unige.ch/unige-biochem/common/ipa-mcp` | development, issues, the facility's project status |
-| `github` | `github.com/unige-biochem/ipa-mcp` (public) | what users install from: no account needed |
+| `origin` | `github.com/unige-biochem/ipa-mcp` (public) | the code, issues, releases; what users install from, no account needed |
+| `gitlab` | `gitlab.unige.ch/unige-biochem/common/ipa-mcp` | the facility's project status issue; a copy of `main` |
 
-`git push origin main && git push github main`, and the same with `--tags`.
+`git push origin main && git push gitlab main`, and the same with `--tags`.
 
 ## Releasing
 

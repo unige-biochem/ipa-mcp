@@ -13,5 +13,5 @@ Nothing to restrict. The data folder is still outside this repository, at `I:\co
 - Tests run against a fake library in a temp folder (`tests/test_server.py`), never against
   the real synced library, and never write into it.
 - Never publish to PyPI: the server is installed from git (`github.com/unige-biochem/ipa-mcp`,
-  a public copy of the GitLab repo), and the `Private :: Do Not Upload` classifier stays.
+  its home; GitLab keeps the facility's record), and the `Private :: Do Not Upload` classifier stays.
   Do not build a bundle unless asked.
