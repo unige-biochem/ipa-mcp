@@ -14,6 +14,8 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Topic :: Scientific/Engineering :: Image Processing",
+    # Installed from git, never from PyPI: PyPI refuses any upload with a Private classifier.
+    "Private :: Do Not Upload",
 ]
 dependencies = [
     "mcp>=1.9,<2",
@@ -22,6 +24,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp"
+Source = "https://github.com/unige-biochem/ipa-mcp"
 Issues = "https://gitlab.unige.ch/unige-biochem/common/ipa-mcp/-/issues"
 Site = "https://unigech.sharepoint.com/teams/ipa"
 

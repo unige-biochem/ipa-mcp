@@ -12,4 +12,6 @@ Nothing to restrict. The data folder is still outside this repository, at `I:\co
   `docs/measurements.md` and `docs/library.md`). Do not redefine them here; read them there.
 - Tests run against a fake library in a temp folder (`tests/test_server.py`), never against
   the real synced library, and never write into it.
-- Do not publish to PyPI or build a bundle unless asked: a version reaches PyPI once.
+- Never publish to PyPI: the server is installed from git (`github.com/unige-biochem/ipa-mcp`,
+  a public copy of the GitLab repo), and the `Private :: Do Not Upload` classifier stays.
+  Do not build a bundle unless asked.

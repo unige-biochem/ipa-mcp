@@ -45,14 +45,28 @@ To try it in an assistant from the checkout: command `uv`, arguments
 - **Raw data on demand only.** A tool lists files with their download state; nothing
   reads a raw acquisition unless asked for by path.
 
+## Where it lives, and why not PyPI
+
+The server is only useful for the department's site, so it is **not published to
+PyPI**: users install it from git, `uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`.
+The `Private :: Do Not Upload` classifier in `pyproject.toml` makes PyPI refuse an
+upload made by mistake; keep it.
+
+Two remotes, both kept up to date:
+
+| Remote | URL | For |
+| --- | --- | --- |
+| `origin` | `gitlab.unige.ch/unige-biochem/common/ipa-mcp` | development, issues, the facility's project status |
+| `github` | `github.com/unige-biochem/ipa-mcp` (public) | what users install from: no account needed |
+
+`git push origin main && git push github main`, and the same with `--tags`.
+
 ## Releasing
 
 1. Set the version in `pyproject.toml` and `manifest.json`.
-2. `uv run pytest`, `uv build`.
-3. Publish to PyPI: `uv publish` with a PyPI token (`UV_PUBLISH_TOKEN`). PyPI's trusted
-   publishing works from GitHub and GitLab.com, not from gitlab.unige.ch, so either keep
-   publishing from a workstation or mirror the repo to `github.com/unige-biochem/ipa-mcp`
-   and release from there as abba-mcp does. _To be decided._
+2. `uv run pytest`, `uv build` (checks the package builds; the wheel is not uploaded).
+3. Tag `v<version>` and push it to both remotes. Users who pin a version use
+   `git+https://github.com/unige-biochem/ipa-mcp@v<version>`; the others get `main`.
 4. Bundle for Claude Desktop: `npx @anthropic-ai/mcpb validate manifest.json`, then
-   `npx @anthropic-ai/mcpb pack . ipa-mcp-<version>.mcpb`, attached to the GitLab release.
-5. Tag `v<version>`. A version reaches PyPI once: a fix is a new version.
+   `npx @anthropic-ai/mcpb pack . ipa-mcp-<version>.mcpb`, attached to the GitHub release
+   of the tag.
