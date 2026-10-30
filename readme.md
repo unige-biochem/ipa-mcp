@@ -24,7 +24,8 @@ you then send to a model is your decision, as with any file you open.
    [library](https://unigech.sharepoint.com/teams/ipa/Documents%20partages) and click
    *Sync*. OneDrive creates a folder named *biochem-ipa - Documents*. Large raw files
    stay placeholders until something reads them.
-2. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/).**
+2. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/)** and
+   [git](https://git-scm.com/downloads) (uv uses it to fetch the server).
 3. **Register the server** as a local (stdio) MCP server in your application. It runs
    straight from the repository, with
    `uvx --from git+https://github.com/unige-biochem/ipa-mcp ipa-mcp`:
